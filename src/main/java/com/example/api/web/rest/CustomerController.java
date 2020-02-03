@@ -53,6 +53,8 @@ public class CustomerController {
         return service.findById(id).map(oldCustomer -> {
             oldCustomer.setName(customerDTO.getName());
             oldCustomer.setEmail(customerDTO.getEmail());
+            oldCustomer.getAddresses().clear();
+            oldCustomer.getAddresses().addAll(customerDTO.getAddressesEntity());
             Customer customer = service.save(oldCustomer);
             return CustomerResponseDTO.toDTO(customer);
         }).orElseThrow(() -> new CustomerNotFoundException(id));

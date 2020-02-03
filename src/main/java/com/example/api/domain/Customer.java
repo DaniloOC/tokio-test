@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"email"}))
@@ -23,11 +25,15 @@ public class Customer {
     @Email
     private String email;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Address> addresses = new HashSet<>();
+
     public Customer() { }
 
-    public Customer(String name, String email) {
+    public Customer(String name, String email, Set<Address> addresses) {
         this.name = name;
         this.email = email;
+        this.addresses = addresses;
     }
 
     public Long getId() {
@@ -54,4 +60,11 @@ public class Customer {
         this.email = email;
     }
 
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
 }
