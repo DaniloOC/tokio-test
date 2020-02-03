@@ -6,11 +6,10 @@ import com.example.api.dto.CustomerResponseDTO;
 import com.example.api.exception.CustomerNotFoundException;
 import com.example.api.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/customers")
@@ -24,10 +23,16 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<CustomerResponseDTO> findAll() {
-        return service.findAll().stream()
-                .map(CustomerResponseDTO::toDTO)
-                .collect(Collectors.toList());
+    public Page<CustomerResponseDTO> findAll(
+            @RequestParam(
+                value = "page",
+                required = false,
+                defaultValue = "0") int page,
+            @RequestParam(
+                value = "size",
+                required = false,
+                defaultValue = "10") int size) {
+        return service.findAll(page, size).map(CustomerResponseDTO::toDTO);
     }
 
     @GetMapping("/{id}")
