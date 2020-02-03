@@ -1,13 +1,12 @@
 package com.example.api.repository;
 
+import com.example.api.domain.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-import com.example.api.domain.Customer;
-
-public interface CustomerRepository extends CrudRepository<Customer, Long> {
-
-	List<Customer> findAllByOrderByNameAsc();
+    List<Customer> findAllByOrderByNameAsc();
 
 }

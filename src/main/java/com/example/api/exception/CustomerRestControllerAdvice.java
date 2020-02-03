@@ -18,4 +18,10 @@ public class CustomerRestControllerAdvice {
     public List<String> constraintViolationHandler(ConstraintViolationException e) {
         return e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
     }
+
+    @ExceptionHandler(CustomerNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String customerNotFoundHandler(CustomerNotFoundException e) {
+        return e.getMessage();
+    }
 }

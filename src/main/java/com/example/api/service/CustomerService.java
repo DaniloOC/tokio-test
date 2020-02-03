@@ -5,6 +5,7 @@ import com.example.api.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,13 @@ public class CustomerService {
         return repository.findById(id);
     }
 
+    @Transactional
     public Customer save(Customer customer) {
-        return repository.save(customer);
+        return repository.saveAndFlush(customer);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 }
