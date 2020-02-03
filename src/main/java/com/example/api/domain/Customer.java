@@ -1,14 +1,12 @@
 package com.example.api.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"email"}))
 public class Customer {
 
     @Id
@@ -17,6 +15,7 @@ public class Customer {
 
     @Column(nullable = false)
     @NotEmpty
+    @Size(min = 3, max = 255)
     private String name;
 
     @Column(nullable = false)
